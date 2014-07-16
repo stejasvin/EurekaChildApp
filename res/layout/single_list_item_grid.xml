@@ -1,0 +1,28 @@
+<?xml version="1.0" encoding="utf-8"?>
+<LinearLayout
+     xmlns:android="http://schemas.android.com/apk/res/android"
+     android:layout_width="200dp"
+     android:layout_height="100dp"
+     android:orientation="vertical"
+     android:id="@+id/grid_ll"
+     android:background="#aaaaaa"
+     android:layout_gravity="center"
+    >
+ 
+     <TextView
+         android:id="@+id/grid_tv"
+         android:textSize="20dp"
+         android:textStyle="bold"
+         android:layout_width="100dp"
+         android:layout_height="50dp"
+         android:text="hey"/>
+
+     <CheckBox
+         android:id="@+id/grid_cb"
+         android:layout_width="100dp"
+         android:layout_height="50dp"
+         android:text=" Acquired"
+
+         />
+
+</LinearLayout>

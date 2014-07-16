@@ -1,0 +1,73 @@
+<LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:tools="http://schemas.android.com/tools"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent"
+    android:orientation="vertical"
+    android:paddingBottom="@dimen/activity_vertical_margin"
+    android:paddingLeft="@dimen/activity_horizontal_margin"
+    android:paddingRight="@dimen/activity_horizontal_margin"
+    android:paddingTop="@dimen/activity_vertical_margin"
+    tools:context="stejasvin.eaindia.Activities.ViewSkillChart">
+
+    <TextView
+        android:id="@+id/tv_vs_centre_name"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:text="Center - " />
+
+    <TextView
+        android:id="@+id/tv_vs_tutor"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:text="Tutor - " />
+
+    <ScrollView
+        android:layout_width="match_parent"
+        android:layout_height="fill_parent"
+        android:background="#aabbcc">
+
+        <FrameLayout
+            android:layout_width="fill_parent"
+            android:layout_height="match_parent"
+            android:background="#110033">
+
+            <LinearLayout
+                android:layout_width="fill_parent"
+                android:layout_height="match_parent"
+                android:orientation="horizontal">
+
+                <ListView
+                    android:id="@+id/list_vs"
+                    android:layout_width="0dp"
+                    android:layout_height="fill_parent"
+                    android:layout_weight="1"
+
+                    />
+
+                <LinearLayout
+                    android:id="@+id/linearLayout_grid"
+                    android:layout_width="1000dp"
+                    android:layout_height="800dp"
+                    android:layout_weight="4"
+                    android:orientation="vertical">
+
+                    <com.jess.ui.TwoWayGridView xmlns:app="http://schemas.android.com/apk/res-auto"
+                        android:id="@+id/tv_vs_gridview"
+                        android:layout_width="fill_parent"
+                        android:layout_height="fill_parent"
+                        app:columnWidth="500dp"
+                        app:horizontalSpacing="10dp"
+                        app:rowHeight="100dp"
+                        app:verticalSpacing="4dp"
+                        app:scrollDirectionLandscape="horizontal"
+                        app:scrollDirectionPortrait="horizontal"
+                        app:stretchMode="columnWidth"
+                        />
+
+                </LinearLayout>
+            </LinearLayout>
+        </FrameLayout>
+
+    </ScrollView>
+
+</LinearLayout>
