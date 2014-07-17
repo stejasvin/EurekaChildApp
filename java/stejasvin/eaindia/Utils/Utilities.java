@@ -7,10 +7,12 @@ import org.json.JSONException;
 
 import java.text.ParseException;
 import java.text.SimpleDateFormat;
+import java.util.ArrayList;
 import java.util.Calendar;
 import java.util.Date;
 import java.util.HashMap;
 
+import stejasvin.eaindia.Objects.Student;
 import stejasvin.eaindia.databases.SkillDatabaseHandler;
 
 /**
@@ -73,5 +75,14 @@ public class Utilities {
             }
         }
         return map;
+    }
+
+
+    public static Student getStudentFromList(ArrayList<Student> slist, String sname){
+        for(Student s:slist){
+            if(s.getName().equals(sname))
+                return s;
+        }
+        return null;
     }
 }

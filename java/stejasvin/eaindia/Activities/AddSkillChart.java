@@ -11,10 +11,8 @@ import android.widget.AdapterView;
 import android.widget.AdapterView.OnItemClickListener;
 import android.widget.ArrayAdapter;
 import android.widget.Button;
-import android.widget.LinearLayout;
 import android.widget.ListView;
 import android.widget.TextView;
-import android.widget.Toast;
 
 import java.util.ArrayList;
 import java.util.Collections;
@@ -57,6 +55,7 @@ public class AddSkillChart extends Activity {
 
         // List to display the contacts
         final ListView names = (ListView) this.findViewById(R.id.list_add_sc_list);
+        final ListView selectedNamesLv = (ListView) this.findViewById(R.id.list_add_sc_selected_list);
         final TextView search = (TextView) this.findViewById(R.id.et_add_sc_stud_name);
         final TextView center = (TextView) this.findViewById(R.id.et_add_sc_cname);
         final TextView tutor = (TextView) this.findViewById(R.id.et_add_sc_tutor);
@@ -83,7 +82,7 @@ public class AddSkillChart extends Activity {
 
         final StudentListAddSkillChartAdapter selectednamesadapter = new StudentListAddSkillChartAdapter(this,
                 selectedList);
-        names.setAdapter(namesadapter);
+        selectedNamesLv.setAdapter(selectednamesadapter);
 
 
 //        final StudentListAddSkillChartAdapter namesadapter = new StudentListAddSkillChartAdapter(this,
@@ -116,7 +115,9 @@ public class AddSkillChart extends Activity {
             public void onItemClick(AdapterView<?> myAdapter, View myView,
                                     int myItemInt, long mylng) {
                 String s = namesadapter.getItem(myItemInt).toString();
-                addTvToScrollView(studNameList.indexOf(s),s);
+                selectedList.add(Utilities.getStudentFromList(studList,s));
+                selectednamesadapter.notifyDataSetChanged();
+                //addTvToScrollView(studNameList.indexOf(s),s);
             }
         });
 
@@ -155,7 +156,7 @@ public class AddSkillChart extends Activity {
                         }
                     }
                     if(!flag)
-                        studentIds+=s.getRoll()+":";
+                        studentIds+=s.getLid()+":";
                     else
                         overwrites.add(s);
                 }
@@ -169,7 +170,7 @@ public class AddSkillChart extends Activity {
                         @Override
                         public void onClick(DialogInterface arg0, int arg1) {
                             for(Student s:overwrites)
-                                studentIds+=s.getRoll()+":";
+                                studentIds+=s.getLid()+":";
                             skillChart.setStudents(studentIds);
                             skillChartDatabaseHandler.addSkillChart(skillChart);
                             finish();
@@ -188,38 +189,42 @@ public class AddSkillChart extends Activity {
 
                     alert.setCancelable(true);
                     alert.show();
+                }else{
+                    skillChart.setStudents(studentIds);
+                    skillChartDatabaseHandler.addSkillChart(skillChart);
+                    finish();
                 }
             }
         });
 
     }
 
-    void addTvToScrollView(final int itemInt, String name){
-        LinearLayout ll = (LinearLayout)findViewById(R.id.ll_add_sc);
-        ll.setOrientation(LinearLayout.HORIZONTAL);
-        TextView tv = new TextView(AddSkillChart.this);
-        tv.setId(itemInt);
-        LinearLayout llnew = new LinearLayout(AddSkillChart.this);
-        llnew.setOrientation(LinearLayout.HORIZONTAL);
-        Button b = new Button(AddSkillChart.this);
-        b.setText("Del");
-        b.setOnClickListener(new View.OnClickListener() {
-            @Override
-            public void onClick(View v) {
-                //int index = selectedList.indexOf(((TextView)v.findViewById()).getText().toString());
-//                if(index!=-1) selectedList.remove(index);
-                selectedList.remove((TextView)v.);
-            }
-        });
-        tv.setText(name);
-        llnew.addView(tv);
-        llnew.addView(b);
-        ll.addView(llnew);
-
-        TextView tv1 = (TextView)findViewById(R.id.et_add_sc_stud_name);
-        tv1.setText("");
-        selectedList.add(studMap.get(name));
-    }
+//    void addTvToScrollView(final int itemInt, String name){
+//        LinearLayout ll = (LinearLayout)findViewById(R.id.ll_add_sc);
+//        ll.setOrientation(LinearLayout.HORIZONTAL);
+//        TextView tv = new TextView(AddSkillChart.this);
+//        tv.setId(itemInt);
+//        LinearLayout llnew = new LinearLayout(AddSkillChart.this);
+//        llnew.setOrientation(LinearLayout.HORIZONTAL);
+//        Button b = new Button(AddSkillChart.this);
+//        b.setText("Del");
+//        b.setOnClickListener(new View.OnClickListener() {
+//            @Override
+//            public void onClick(View v) {
+//                //int index = selectedList.indexOf(((TextView)v.findViewById()).getText().toString());
+////                if(index!=-1) selectedList.remove(index);
+//                selectedList.remove((TextView)v.);
+//            }
+//        });
+//        tv.setText(name);
+//        llnew.addView(tv);
+//        llnew.addView(b);
+//        ll.addView(llnew);
+//
+//        TextView tv1 = (TextView)findViewById(R.id.et_add_sc_stud_name);
+//        tv1.setText("");
+//        selectedList.add(studMap.get(name));
+//    }
 	/*
 	 * @Override public boolean onCreateOptionsMenu(Menu menu) { // Inflate the
 	 * menu; this adds items to the action bar if it is present.

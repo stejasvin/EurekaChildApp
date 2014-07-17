@@ -54,6 +54,7 @@ public class StudentListAddSkillChartAdapter extends ArrayAdapter {
 
         TextView tvStd = (TextView) row.findViewById(R.id.single_list_item_std_name);
         tvStd.setText(studentList.get(position).getName());
+
         Button bDel = (Button) row.findViewById(R.id.single_list_item_std_del);
         final View finalRow = row;
         bDel.setOnClickListener(new View.OnClickListener() {

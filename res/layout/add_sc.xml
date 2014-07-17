@@ -54,7 +54,8 @@
 
     <ListView
         android:layout_width="match_parent"
-        android:layout_height="wrap_content"
+        android:layout_height="0dp"
+        android:layout_weight="1"
         android:id="@+id/list_add_sc_list" />
 
     <ImageView
@@ -62,18 +63,11 @@
         android:layout_height="5dp"
         android:background="#000000"/>
 
-    <ScrollView
-        android:layout_width="fill_parent"
-        android:layout_height="25dp"
+    <ListView
+        android:layout_width="match_parent"
+        android:layout_height="0dp"
         android:layout_weight="1"
-        >
-        <LinearLayout
-            android:layout_width="fill_parent"
-            android:layout_height="wrap_content"
-            android:orientation="vertical"
-            android:id="@+id/ll_add_sc">
-            </LinearLayout>
-        </ScrollView>
+        android:id="@+id/list_add_sc_selected_list" />
 
     <Button
         android:layout_width="match_parent"

@@ -58,7 +58,7 @@ public class ViewSkillChart extends ActionBarActivity {
     SkComparator skComparator = new SkComparator();
     int gridHeight = 0;
     ArrayList<Skill> skillset;
-    ArrayList<Student> studentset;
+    ArrayList<Student> studentset = new ArrayList<Student>();
     ArrayList<HashMap<String,String>> mainList;
 
     @Override
@@ -93,9 +93,9 @@ public class ViewSkillChart extends ActionBarActivity {
             return;
         }
 
-        int ids[] = new int[studIds.length - 1];
+        int ids[] = new int[studIds.length];
 
-        for (int i = 0; i < studIds.length - 1; i++) {
+        for (int i = 0; i < studIds.length; i++) {
             try {
                 ids[i] = Integer.decode(studIds[i]);
             } catch (NumberFormatException e) {

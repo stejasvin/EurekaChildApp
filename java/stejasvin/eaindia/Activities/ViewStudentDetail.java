@@ -10,6 +10,9 @@ import android.widget.TableLayout;
 import android.widget.TableRow;
 import android.widget.TextView;
 
+import org.json.JSONArray;
+import org.json.JSONException;
+
 import stejasvin.eaindia.Objects.Skill;
 import stejasvin.eaindia.Objects.Student;
 import stejasvin.eaindia.R;
@@ -36,32 +39,37 @@ public class ViewStudentDetail extends ActionBarActivity {
         TableRow.LayoutParams dateLp = new TableRow.LayoutParams();
         nameLp.gravity = Gravity.RIGHT;
 
-        String[] skillIds = student.getSkills().split(":");
-        if(skillIds.length > 0){
-            int[] ids = new int[skillIds.length];
-            for(int i=0;i<skillIds.length;i++){
-                try {
-                    ids[i] = Integer.decode(skillIds[i]);
-                    Skill skill = skillDatabaseHandler.getSkill(ids[i]);
-                    TextView tvName = new TextView(this);
-                    tvName.setText(skill.getName());
-                    tvName.setLayoutParams(nameLp);
-                    TextView tvDate = new TextView(this);
-                    tvDate.setText(skill.getDateOfCreation());
-                    tvDate.setLayoutParams(dateLp);
+        try {
+            JSONArray skillIds = new JSONArray(student.getSkills());
+            if (skillIds.length() > 0) {
+                int[] ids = new int[skillIds.length()];
+                for (int i = 0; i < skillIds.length(); i++) {
+                    try {
+                        ids[i] = skillIds.getJSONObject(i).getInt(SkillDatabaseHandler.KEY_LOCAL_ID);
+                        Skill skill = skillDatabaseHandler.getSkill(ids[i]);
+                        TextView tvName = new TextView(this);
+                        tvName.setText(skill.getName());
+                        tvName.setLayoutParams(nameLp);
+                        TextView tvDate = new TextView(this);
+                        tvDate.setText(skill.getDateOfCreation()+" - ");
+                        tvDate.setLayoutParams(dateLp);
 
-                    TableRow tr = new TableRow(this);
-                    tr.setOrientation(LinearLayout.HORIZONTAL);
-                    tr.addView(tvName);
-                    tr.addView(tvDate);
+                        TableRow tr = new TableRow(this);
+                        tr.setOrientation(LinearLayout.HORIZONTAL);
 
-                    tl.addView(tr);
+                        tr.addView(tvDate);
+                        tr.addView(tvName);
 
-                }catch (NumberFormatException e){
-                    e.printStackTrace();
+                        tl.addView(tr);
+
+                    } catch (NumberFormatException e) {
+                        e.printStackTrace();
+                    }
+
                 }
-
             }
+        }catch (JSONException e){
+            e.printStackTrace();
         }
 
 

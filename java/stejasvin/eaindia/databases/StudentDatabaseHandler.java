@@ -91,20 +91,21 @@ public class StudentDatabaseHandler extends SQLiteOpenHelper {
                 KEY_CREATION_DATE}, KEY_LOCAL_ID + "=?",
 				new String[] { String.valueOf(l_id) }, null, null, null, null);
 
-		if (cursor != null)
-			cursor.moveToFirst();
-
-		Student student = new Student();
-        student.setLid(cursor.getInt(0));
-        student.setRoll(cursor.getString(1));
-        student.setName(cursor.getString(2));
-        student.setStd(cursor.getString(3));
-        student.setGender(cursor.getString(4));
-        student.setSkills(cursor.getString(5));
-        student.setDateOfCreation(cursor.getString(6));
+		if (cursor != null) {
+            cursor.moveToFirst();
+            Student student = new Student();
+            student.setLid(cursor.getInt(0));
+            student.setRoll(cursor.getString(1));
+            student.setName(cursor.getString(2));
+            student.setStd(cursor.getString(3));
+            student.setGender(cursor.getString(4));
+            student.setSkills(cursor.getString(5));
+            student.setDateOfCreation(cursor.getString(6));
+            return student;
+        }
 
         db.close();
-		return student;
+		return null;
 	}
 	
 	// Getting All Annotations
