@@ -21,6 +21,7 @@ import java.util.Collections;
 import java.util.Comparator;
 import java.util.HashMap;
 
+import stejasvin.eaindia.Adapters.StudentListAddSkillChartAdapter;
 import stejasvin.eaindia.Objects.SkillChart;
 import stejasvin.eaindia.Objects.Student;
 import stejasvin.eaindia.R;
@@ -80,6 +81,15 @@ public class AddSkillChart extends Activity {
                 R.layout.single_list_item_skill_chart,studNameList);
         names.setAdapter(namesadapter);
 
+        final StudentListAddSkillChartAdapter selectednamesadapter = new StudentListAddSkillChartAdapter(this,
+                selectedList);
+        names.setAdapter(namesadapter);
+
+
+//        final StudentListAddSkillChartAdapter namesadapter = new StudentListAddSkillChartAdapter(this,
+//                studNameList);
+//        names.setAdapter(namesadapter);
+
         // Filtering the contacts according to the text entered
         search.addTextChangedListener(new TextWatcher() {
 
@@ -105,21 +115,22 @@ public class AddSkillChart extends Activity {
         names.setOnItemClickListener(new OnItemClickListener() {
             public void onItemClick(AdapterView<?> myAdapter, View myView,
                                     int myItemInt, long mylng) {
-                addTvToScrollView(namesadapter.getItem(myItemInt).toString());
+                String s = namesadapter.getItem(myItemInt).toString();
+                addTvToScrollView(studNameList.indexOf(s),s);
             }
         });
 
-        bAdd.setOnClickListener(new View.OnClickListener() {
-            @Override
-            public void onClick(View v) {
-                if(studNameList.contains(search.getText().toString()))
-                    addTvToScrollView(search.getText().toString());
-                else{
-                    Toast.makeText(AddSkillChart.this,"Student by this name not found",Toast.LENGTH_SHORT).show();
-                }
-
-            }
-        });
+//        bAdd.setOnClickListener(new View.OnClickListener() {
+//            @Override
+//            public void onClick(View v) {
+//                if(studNameList.contains(search.getText().toString()))
+//                    addTvToScrollView(search.getText().toString());
+//                else{
+//                    Toast.makeText(AddSkillChart.this,"Student by this name not found",Toast.LENGTH_SHORT).show();
+//                }
+//
+//            }
+//        });
 
         bCreateSc.setOnClickListener(new View.OnClickListener() {
             @Override
@@ -183,12 +194,29 @@ public class AddSkillChart extends Activity {
 
     }
 
-    void addTvToScrollView(String name){
+    void addTvToScrollView(final int itemInt, String name){
         LinearLayout ll = (LinearLayout)findViewById(R.id.ll_add_sc);
+        ll.setOrientation(LinearLayout.HORIZONTAL);
         TextView tv = new TextView(AddSkillChart.this);
-        TextView tv1 = (TextView)findViewById(R.id.et_add_sc_stud_name);
+        tv.setId(itemInt);
+        LinearLayout llnew = new LinearLayout(AddSkillChart.this);
+        llnew.setOrientation(LinearLayout.HORIZONTAL);
+        Button b = new Button(AddSkillChart.this);
+        b.setText("Del");
+        b.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                //int index = selectedList.indexOf(((TextView)v.findViewById()).getText().toString());
+//                if(index!=-1) selectedList.remove(index);
+                selectedList.remove((TextView)v.);
+            }
+        });
         tv.setText(name);
-        ll.addView(tv);
+        llnew.addView(tv);
+        llnew.addView(b);
+        ll.addView(llnew);
+
+        TextView tv1 = (TextView)findViewById(R.id.et_add_sc_stud_name);
         tv1.setText("");
         selectedList.add(studMap.get(name));
     }
