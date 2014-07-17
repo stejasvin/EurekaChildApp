@@ -16,6 +16,7 @@ import com.jess.ui.TwoWayGridView;
 
 import org.json.JSONArray;
 import org.json.JSONException;
+import org.json.JSONObject;
 
 import java.util.ArrayList;
 import java.util.Collections;
@@ -72,6 +73,7 @@ public class ViewSkillChart extends ActionBarActivity {
             finish();
             return;
         }
+
         SkillChartDatabaseHandler skillChartDatabaseHandler = new SkillChartDatabaseHandler(this);
         SkillDatabaseHandler skillDatabaseHandler = new SkillDatabaseHandler(this);
         StudentDatabaseHandler studentDatabaseHandler = new StudentDatabaseHandler(this);
@@ -103,11 +105,12 @@ public class ViewSkillChart extends ActionBarActivity {
 
         if (ids.length > 0) {
             skillset = skillDatabaseHandler.getAllSkill();
-            studentset = studentDatabaseHandler.getAllStudents();
+            //studentset = studentDatabaseHandler.getAllStudents();
+            for(int i=0;i<ids.length;i++){
+                studentset.add(studentDatabaseHandler.getStudent(ids[i]));
+            }
             Collections.sort(studentset, stComparator);
             Collections.sort(skillset, skComparator);
-
-
             int noc = skillset.size();
             int nor = studentset.size() + 1;
             int x, y;
@@ -209,25 +212,28 @@ public class ViewSkillChart extends ActionBarActivity {
     protected void onStop() {
         super.onStop();
 
-//        try {
-//            for (int i = 0; i < studentset.size(); i++) {
-//                Student student = studentset.get(i);
-//                JSONArray jsonArray = new JSONArray();
-//                for (int j = 0; j < skillset.size(); j++) {
-//                    JSONObject jsonObject = new JSONObject();
-//                    jsonObject.accumulate(SkillDatabaseHandler.KEY_LOCAL_ID, skillset.get(i).getLid());
-//                    if (mainList.get(i) != null)
-//                        jsonObject.accumulate(SkillDatabaseHandler.KEY_CREATION_DATE, mainList.get(i).get(skillset.get(j).getLid() + ""));
-//                    else
-//                        jsonObject.accumulate(SkillDatabaseHandler.KEY_CREATION_DATE, "");
-//                    jsonArray.put(j,jsonObject);
-//                }
-//
-//            }
-//        }catch(JSONException e){
-//            e.printStackTrace();
-//
-//        }
+        try {
+            StudentDatabaseHandler studentDatabaseHandler = new StudentDatabaseHandler(this);
+            for (int i = 0; i < studentset.size(); i++) {
+                Student student = studentset.get(i);
+                JSONArray jsonArray = new JSONArray();
+                for (int j = 0; j < skillset.size(); j++) {
+                    JSONObject jsonObject = new JSONObject();
+                    jsonObject.accumulate(SkillDatabaseHandler.KEY_LOCAL_ID, skillset.get(j).getLid());
+                    if (mainList.get(i) != null)
+                        jsonObject.accumulate(SkillDatabaseHandler.KEY_CREATION_DATE, mainList.get(i).get(skillset.get(j).getLid() + ""));
+                    else
+                        jsonObject.accumulate(SkillDatabaseHandler.KEY_CREATION_DATE, "");
+                    jsonArray.put(j,jsonObject);
+                }
+                student.setSkills(jsonArray.toString());
+                studentDatabaseHandler.updateStudent(student);
+
+            }
+        }catch(JSONException e){
+            e.printStackTrace();
+
+        }
     }
 
 

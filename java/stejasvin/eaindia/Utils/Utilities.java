@@ -62,11 +62,15 @@ public class Utilities {
         return null;
     }
 
-    public static HashMap<String,String> extractjson(JSONArray jsonArray) throws JSONException{
+    public static HashMap<String,String> extractjson(JSONArray jsonArray) {
         HashMap<String,String> map = new HashMap<String,String>();
         for(int i=0;i<jsonArray.length();i++){
-            map.put((String) jsonArray.getJSONObject(i).get(SkillDatabaseHandler.KEY_LOCAL_ID),
-                    (String) jsonArray.getJSONObject(i).get(SkillDatabaseHandler.KEY_CREATION_DATE));
+            try {
+                map.put("" + jsonArray.getJSONObject(i).get(SkillDatabaseHandler.KEY_LOCAL_ID),
+                        (String) jsonArray.getJSONObject(i).get(SkillDatabaseHandler.KEY_CREATION_DATE));
+            }catch(JSONException e){
+                e.printStackTrace();
+            }
         }
         return map;
     }

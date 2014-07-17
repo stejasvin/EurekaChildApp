@@ -174,18 +174,21 @@ public class StudentDatabaseHandler extends SQLiteOpenHelper {
 
 
 
-//	//Updating single annotation
-//	public int updateAnnotation(Annotation annotation) {
-//		SQLiteDatabase db = this.getWritableDatabase();
-//
-//		ContentValues values = new ContentValues();
-//		values.put(KEY_NAME, annotation.getName());
-//		values.put(KEY_PH_NO, annotation.getPhoneNumber());
-//
-//		// updating row
-//		return db.update(TABLE_ANNOTATIONS, values, KEY_ID + " = ?",
-//				new String[] { String.valueOf(annotation.getID()) });
-//	}
+	//Updating single annotation
+	public int updateStudent(Student student) {
+		SQLiteDatabase db = this.getWritableDatabase();
+
+		ContentValues values = new ContentValues();
+        values.put(KEY_ROLL, student.getRoll());
+        values.put(KEY_NAME, student.getName());
+        values.put(KEY_STD, student.getStd());
+        values.put(KEY_GENDER, student.getGender());
+        values.put(KEY_SKILLSET, student.getSkills());
+        values.put(KEY_CREATION_DATE, student.getDateOfCreation());
+		// updating row
+		return db.update(TABLE_STUDENT, values, KEY_LOCAL_ID + " = ?",
+				new String[] { String.valueOf(student.getLid()) });
+	}
 //
 //	// Deleting single annotation
 //	public void deleteAnnotation(Annotation annotation) {

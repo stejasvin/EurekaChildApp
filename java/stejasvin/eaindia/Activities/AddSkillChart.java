@@ -1,6 +1,8 @@
 package stejasvin.eaindia.Activities;
 
 import android.app.Activity;
+import android.app.AlertDialog;
+import android.content.DialogInterface;
 import android.os.Bundle;
 import android.text.Editable;
 import android.text.TextWatcher;
@@ -45,6 +47,7 @@ public class AddSkillChart extends Activity {
 
     ArrayList<Student> selectedList = new ArrayList<Student>();
     HashMap<String,Student> studMap = null;
+    String studentIds="";
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -121,18 +124,60 @@ public class AddSkillChart extends Activity {
         bCreateSc.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
-                SkillChartDatabaseHandler skillChartDatabaseHandler = new SkillChartDatabaseHandler(AddSkillChart.this);
-                SkillChart skillChart = new SkillChart();
+                final SkillChartDatabaseHandler skillChartDatabaseHandler = new SkillChartDatabaseHandler(AddSkillChart.this);
+                ArrayList<SkillChart> asc = skillChartDatabaseHandler.getAllSkillCharts();
+                final ArrayList<Student> overwrites = new ArrayList<Student>();
+                final SkillChart skillChart = new SkillChart();
                 skillChart.setCentreName(center.getText().toString());
                 skillChart.setTutorName(tutor.getText().toString());
                 skillChart.setDateOfCreation(Utilities.getDate(Utilities.getCurrentTime()));
-                String studentIds="";
+                studentIds="";
+                boolean flag;
                 for(Student s:selectedList){
-                    studentIds+=s.getRoll()+":";
+                    flag = false;
+                    for(SkillChart sc:asc){
+                        if(sc.getStudents().contains(":"+s.getLid()+":") ||
+                                (sc.getStudents().contains(s.getLid()+":")&& sc.getStudents().split(":")[0]==s.getLid()+""))//To take care of overlap at inital ID
+                        {
+                            flag = true;
+                            break;
+                        }
+                    }
+                    if(!flag)
+                        studentIds+=s.getRoll()+":";
+                    else
+                        overwrites.add(s);
                 }
-                skillChart.setStudents(studentIds);
-                skillChartDatabaseHandler.addSkillChart(skillChart);
-                finish();
+                if(overwrites.size()>1){
+                    final AlertDialog.Builder alert = new AlertDialog.Builder(AddSkillChart.this);
+                    alert.setTitle("Same student(s) in more than one skillchart!"); // set title for the alert
+                    alert.setMessage("Click 'Continue' to transfer the student to this skillchart. Click 'Add Remaining' to add only the new students."); // this sets the message in the alert dialog
+                    alert.setIcon(R.drawable.ic_launcher); // this sets icon for the dialog
+                    alert.setPositiveButton("Continue", new DialogInterface.OnClickListener() {
+
+                        @Override
+                        public void onClick(DialogInterface arg0, int arg1) {
+                            for(Student s:overwrites)
+                                studentIds+=s.getRoll()+":";
+                            skillChart.setStudents(studentIds);
+                            skillChartDatabaseHandler.addSkillChart(skillChart);
+                            finish();
+                        }
+                    });
+
+                    alert.setNegativeButton("Add Remaining", new DialogInterface.OnClickListener() {
+
+                        @Override
+                        public void onClick(DialogInterface arg0, int arg1) {
+                            skillChart.setStudents(studentIds);
+                            skillChartDatabaseHandler.addSkillChart(skillChart);
+                            finish(); // Exits the application
+                        }
+                    });
+
+                    alert.setCancelable(true);
+                    alert.show();
+                }
             }
         });
 
