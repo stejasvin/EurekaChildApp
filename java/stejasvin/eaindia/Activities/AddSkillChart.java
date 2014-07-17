@@ -17,7 +17,6 @@ import android.widget.TextView;
 import java.util.ArrayList;
 import java.util.Collections;
 import java.util.Comparator;
-import java.util.HashMap;
 
 import stejasvin.eaindia.Adapters.StudentListAddSkillChartAdapter;
 import stejasvin.eaindia.Objects.SkillChart;
@@ -45,8 +44,11 @@ class MapComparator implements Comparator<String> {
 public class AddSkillChart extends Activity {
 
     ArrayList<Student> selectedList = new ArrayList<Student>();
-    HashMap<String,Student> studMap = null;
+    //HashMap<String,Student> studMap = null;
     String studentIds="";
+
+    boolean actEdit = false;
+    int editSkillChartId = -1;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -64,8 +66,30 @@ public class AddSkillChart extends Activity {
 
         //Adding favourities
         StudentDatabaseHandler studentDatabaseHandler = new StudentDatabaseHandler(AddSkillChart.this);
-        studMap = studentDatabaseHandler.getAllStudentsMap();
+        //studMap = studentDatabaseHandler.getAllStudentsMap();
         final ArrayList<Student> studList = studentDatabaseHandler.getAllStudents();
+
+        actEdit = getIntent().getBooleanExtra("stejasvin.ACT_EDIT",false);
+        if(actEdit){
+            editSkillChartId = getIntent().getIntExtra("stejasvin.EDIT_SC_LID",0);
+            bCreateSc.setText("Edit SkillChart");
+            SkillChartDatabaseHandler skillChartDatabaseHandler = new SkillChartDatabaseHandler(AddSkillChart.this);
+            SkillChart skillChart = skillChartDatabaseHandler.getSkillChart(editSkillChartId);
+            center.setText(skillChart.getCentreName());
+            tutor.setText(skillChart.getTutorName());
+//            String[] sLid = skillChart.getStudents().split(":");
+
+            for(Student s:studList){
+                if(skillChart.getStudents().contains(s.getLid()+":") ||
+                        (skillChart.getStudents().contains(s.getLid()+":")&& skillChart.getStudents().split(":")[0]==s.getLid()+"")){
+                    selectedList.add(s);
+                }
+            }
+            for(Student s:selectedList)
+                    studList.remove(s);
+
+        }
+
         final ArrayList<String> studNameList = new ArrayList<String>();
 
         for(int i=0;i<studList.size();i++)
@@ -81,7 +105,7 @@ public class AddSkillChart extends Activity {
         names.setAdapter(namesadapter);
 
         final StudentListAddSkillChartAdapter selectednamesadapter = new StudentListAddSkillChartAdapter(this,
-                selectedList);
+                selectedList,studNameList,namesadapter);
         selectedNamesLv.setAdapter(selectednamesadapter);
 
 
@@ -116,6 +140,8 @@ public class AddSkillChart extends Activity {
                                     int myItemInt, long mylng) {
                 String s = namesadapter.getItem(myItemInt).toString();
                 selectedList.add(Utilities.getStudentFromList(studList,s));
+                studNameList.remove(s);
+                namesadapter.notifyDataSetChanged();
                 selectednamesadapter.notifyDataSetChanged();
                 //addTvToScrollView(studNameList.indexOf(s),s);
             }
@@ -143,6 +169,7 @@ public class AddSkillChart extends Activity {
                 skillChart.setCentreName(center.getText().toString());
                 skillChart.setTutorName(tutor.getText().toString());
                 skillChart.setDateOfCreation(Utilities.getDate(Utilities.getCurrentTime()));
+
                 studentIds="";
                 boolean flag;
                 for(Student s:selectedList){
@@ -160,7 +187,19 @@ public class AddSkillChart extends Activity {
                     else
                         overwrites.add(s);
                 }
-                if(overwrites.size()>1){
+                //If editing the chart
+                if(actEdit){
+                    if(editSkillChartId!=-1)
+                        skillChart.setLid(editSkillChartId);
+                    else
+                        return;
+
+                    for(Student s:overwrites)
+                        studentIds+=s.getLid()+":";
+                    skillChart.setStudents(studentIds);
+                    skillChartDatabaseHandler.updateSkillChart(skillChart);
+                    finish();
+                }else if(overwrites.size()>1){
                     final AlertDialog.Builder alert = new AlertDialog.Builder(AddSkillChart.this);
                     alert.setTitle("Same student(s) in more than one skillchart!"); // set title for the alert
                     alert.setMessage("Click 'Continue' to transfer the student to this skillchart. Click 'Add Remaining' to add only the new students."); // this sets the message in the alert dialog

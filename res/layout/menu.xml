@@ -29,12 +29,6 @@
             android:layout_height="wrap_content"
             android:orientation="vertical">
 
-            <TextView
-                android:layout_width="fill_parent"
-                android:layout_height="wrap_content"
-                android:text="Eureka Training Center Skill Chart"
-                android:textSize="20dp" />
-
             <Button
                 android:id="@+id/add_student"
                 android:layout_width="fill_parent"

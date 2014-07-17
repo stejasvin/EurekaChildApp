@@ -49,11 +49,22 @@ public class StudentListAdapter extends ArrayAdapter {
             LayoutInflater inflater = (LayoutInflater) context.getSystemService(Context.LAYOUT_INFLATER_SERVICE);
             row = inflater.inflate(textViewResourceId, parent, false); // inflate view from xml file
         }
-        row.setEnabled(false);
 
         TextView tvCourse = (TextView) row.findViewById(R.id.single_list_item_std_list_name);
-        tvCourse.setText(studentList.get(position).getName());
+        if(position==0) {
+            tvCourse.setText("List of Students");
+            tvCourse.setTextSize(30);
+            tvCourse.setPadding(5,10,5,10);
+
+        }else {
+
+            tvCourse.setText(studentList.get(position-1).getName());
+        }
         return row;
     }
 
+    @Override
+    public int getCount() {
+        return studentList.size()+1;
+    }
 }

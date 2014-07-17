@@ -49,11 +49,21 @@ public class SkillChartListAdapter extends ArrayAdapter {
             LayoutInflater inflater = (LayoutInflater) context.getSystemService(Context.LAYOUT_INFLATER_SERVICE);
             row = inflater.inflate(textViewResourceId, parent, false); // inflate view from xml file
         }
-        row.setEnabled(false);
-
+        //row.setEnabled(false);
         TextView tvCourse = (TextView) row.findViewById(R.id.single_list_item_std_list_name);
-        tvCourse.setText(skillChartList.get(position).getCentreName());
+        if(position==0) {
+            tvCourse.setText("List of SkillCharts");
+            tvCourse.setTextSize(30);
+            tvCourse.setPadding(5,10,5,10);
+
+        }else {
+            tvCourse.setText(skillChartList.get(position-1).getCentreName());
+        }
         return row;
     }
 
+    @Override
+    public int getCount() {
+        return skillChartList.size()+1;
+    }
 }

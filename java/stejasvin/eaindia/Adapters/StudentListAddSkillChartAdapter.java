@@ -11,6 +11,7 @@ import android.widget.ArrayAdapter;
 import android.widget.Button;
 import android.widget.TextView;
 
+import java.util.ArrayList;
 import java.util.List;
 
 import stejasvin.eaindia.Objects.Student;
@@ -35,12 +36,16 @@ public class StudentListAddSkillChartAdapter extends ArrayAdapter {
      */
     private Context context;
     StudentDatabaseHandler studentDatabaseHandler = null;
+    ArrayList<String> studNameList;
+    ArrayAdapter<String> namesAdapter;
 
-    public StudentListAddSkillChartAdapter(Context context, List<Student> studentList) {
+    public StudentListAddSkillChartAdapter(Context context, List<Student> studentList, ArrayList<String> studNameList, ArrayAdapter<String> namesAdapter) {
         super(context, R.layout.single_list_item_student_list_add_skill_chart, studentList);
         this.context = context;
         this.studentList = studentList;
         studentDatabaseHandler = new StudentDatabaseHandler(context);
+        this.studNameList = studNameList;
+        this.namesAdapter = namesAdapter;
     }
 
     public View getView(final int position, View convertView, ViewGroup parent) {
@@ -60,9 +65,12 @@ public class StudentListAddSkillChartAdapter extends ArrayAdapter {
         bDel.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
+
+                studNameList.add(studentList.get(position).getName());
                 studentList.remove(position);
+                namesAdapter.notifyDataSetChanged();
                 notifyDataSetChanged();
-                finalRow.setVisibility(View.GONE);
+                //finalRow.setVisibility(View.GONE);
             }
         });
         return row;

@@ -127,6 +127,29 @@ public class SkillChartDatabaseHandler extends SQLiteOpenHelper {
         return skillChartList;
     }
 
+    public void remove(int lid) {
+        SQLiteDatabase db = this.getWritableDatabase();
+		db.delete(TABLE_SKILL_CHART, KEY_LOCAL_ID + " = ?",
+				new String[] { lid+"" });
+		db.close();
+    }
+
+    public int updateSkillChart(SkillChart skillChart) {
+		SQLiteDatabase db = this.getWritableDatabase();
+
+		ContentValues values = new ContentValues();
+
+        values.put(KEY_LOCAL_ID, skillChart.getLid());
+        values.put(KEY_CENTER_NAME, skillChart.getCentreName());
+        values.put(KEY_TUTOR, skillChart.getTutorName());
+        values.put(KEY_STUDENTS, skillChart.getStudents());
+        values.put(KEY_CREATION_DATE, skillChart.getDateOfCreation());
+
+		// updating row
+		return db.update(TABLE_SKILL_CHART, values, KEY_LOCAL_ID + " = ?",
+				new String[] { ""+skillChart.getLid() });
+	}
+
 //	// Getting All Annotations
 //	public List<Annotation> getAllAnnotations() {
 //		List<Annotation> annotationList = new ArrayList<Annotation>();

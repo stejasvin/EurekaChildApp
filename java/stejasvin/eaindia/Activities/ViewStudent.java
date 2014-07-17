@@ -29,11 +29,14 @@ public class ViewStudent extends ListActivity {
             getListView().setOnItemClickListener(new AdapterView.OnItemClickListener() {
                 @Override
                 public void onItemClick(AdapterView<?> parent, View view, int position, long id) {
+                    if(position==0)
+                        return;
                     Intent i = new Intent(ViewStudent.this,ViewStudentDetail.class);
-                    i.putExtra("stejasvin.eaindia.LID",studentList.get(position).getLid());
+                    i.putExtra("stejasvin.eaindia.LID",studentList.get(position-1).getLid());
                     startActivity(i);
                 }
             });
+            getListView().setHeaderDividersEnabled(true);
         }
         else{
             finish();
