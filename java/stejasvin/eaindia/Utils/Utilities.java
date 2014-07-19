@@ -72,7 +72,10 @@ public class Utilities {
                         (String) jsonArray.getJSONObject(i).get(SkillDatabaseHandler.KEY_CREATION_DATE));
             }catch(JSONException e){
                 e.printStackTrace();
+            }catch(Exception e){
+                e.printStackTrace();
             }
+
         }
         return map;
     }

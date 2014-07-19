@@ -90,6 +90,13 @@
         android:visibility="gone"/>
 
     <Button
+        android:layout_width="fill_parent"
+        android:layout_height="wrap_content"
+        android:text="Add all students"
+        android:id="@+id/b_add_sc_add_all"
+        android:layout_gravity="center_horizontal" />
+
+    <Button
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
         android:text="Create Skill Chart"

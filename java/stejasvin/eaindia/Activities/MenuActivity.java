@@ -23,6 +23,15 @@ public class MenuActivity extends Activity {
         Button bAddSc = (Button)findViewById(R.id.add_sc);
         Button bLoadSc = (Button)findViewById(R.id.load_sc);
         Button bViewStudent = (Button)findViewById(R.id.view_student);
+        Button bExIm = (Button)findViewById(R.id.ex_import);
+
+        bExIm.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                Intent i = new Intent(MenuActivity.this,ExportImport.class);
+                startActivity(i);
+            }
+        });
 
         bAddStudent.setOnClickListener(new View.OnClickListener() {
             @Override

@@ -1,13 +1,17 @@
 <?xml version="1.0" encoding="utf-8"?>
-<TextView xmlns:android="http://schemas.android.com/apk/res/android"
-
-    android:id="@+id/single_list_item_std_grid_name_list"
+<LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    android:id="@+id/single_list_item_std_grid_name_list_ll"
     android:layout_width="fill_parent"
-    android:layout_height="100dp"
-    android:orientation="vertical" 
-    android:textSize="20sp"
-    android:textStyle="bold"
-    android:background="#aaaaaa"
-    android:layout_marginBottom="4dp"
+    android:layout_height="wrap_content"
+    android:orientation="vertical"
+
     >
-</TextView>
+    <TextView
+        android:layout_width="fill_parent"
+        android:layout_height="wrap_content"
+        android:textSize="20sp"
+        android:textStyle="bold"
+        android:background="#aaaaaa"
+        android:id="@+id/single_list_item_std_grid_name_list_tv"
+        />
+</LinearLayout>

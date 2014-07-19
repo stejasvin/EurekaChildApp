@@ -8,11 +8,13 @@ import android.widget.Button;
 import android.widget.EditText;
 import android.widget.RadioButton;
 import android.widget.RadioGroup;
+import android.widget.Toast;
 
 import stejasvin.eaindia.Objects.Student;
 import stejasvin.eaindia.R;
 import stejasvin.eaindia.Utils.Utilities;
 import stejasvin.eaindia.databases.StudentDatabaseHandler;
+
 
 public class AddStudent extends ActionBarActivity {
 
@@ -20,6 +22,7 @@ public class AddStudent extends ActionBarActivity {
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.add_student);
+        final StudentDatabaseHandler studentDatabaseHandler = new StudentDatabaseHandler(AddStudent.this);
 
         Button bCreateStudent = (Button)findViewById(R.id.b_create_student);
         bCreateStudent.setOnClickListener(new View.OnClickListener() {
@@ -32,6 +35,11 @@ public class AddStudent extends ActionBarActivity {
                 RadioButton rb1 = (RadioButton)findViewById(R.id.rb1_add_st_gender);
                 RadioButton rb2 = (RadioButton)findViewById(R.id.rb2_add_st_gender);
 
+                if(etName.getText() ==null || etName.getText().toString()==""){
+                    Toast.makeText(AddStudent.this,"Enter student name",Toast.LENGTH_LONG).show();
+                    return;
+                }
+
                 Student student = new Student();
                 student.setName(etName.getText().toString());
                 student.setRoll(etRoll.getText().toString());
@@ -43,11 +51,28 @@ public class AddStudent extends ActionBarActivity {
                     student.setGender("f");
                 student.setSkills("");
 
-                StudentDatabaseHandler studentDatabaseHandler = new StudentDatabaseHandler(AddStudent.this);
                 studentDatabaseHandler.addStudent(student);
                 finish();
             }
         });
+
+//        Button bImport  = (Button)findViewById(R.id.b_import_std);
+//        bImport.setOnClickListener(new View.OnClickListener() {
+//            @Override
+//            public void onClick(View v) {
+//
+//
+//            }
+//        });
+//
+//        Button bExport  = (Button)findViewById(R.id.b_export_std);
+//        bExport.setOnClickListener(new View.OnClickListener() {
+//            @Override
+//            public void onClick(View v) {
+//
+//            }
+//        });
+
 
     }
 
@@ -58,5 +83,6 @@ public class AddStudent extends ActionBarActivity {
         getMenuInflater().inflate(R.menu.add_student, menu);
         return true;
     }
+
 
 }

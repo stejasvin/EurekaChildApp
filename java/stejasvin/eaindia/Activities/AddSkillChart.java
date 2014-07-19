@@ -61,11 +61,11 @@ public class AddSkillChart extends Activity {
         final TextView search = (TextView) this.findViewById(R.id.et_add_sc_stud_name);
         final TextView center = (TextView) this.findViewById(R.id.et_add_sc_cname);
         final TextView tutor = (TextView) this.findViewById(R.id.et_add_sc_tutor);
-        Button bAdd = (Button)findViewById(R.id.b_add_sc_addtolist);
+        Button bAdd = (Button)findViewById(R.id.b_add_sc_add_all);
         Button bCreateSc = (Button)findViewById(R.id.b_add_sc_create_sc);
 
         //Adding favourities
-        StudentDatabaseHandler studentDatabaseHandler = new StudentDatabaseHandler(AddSkillChart.this);
+        final StudentDatabaseHandler studentDatabaseHandler = new StudentDatabaseHandler(AddSkillChart.this);
         //studMap = studentDatabaseHandler.getAllStudentsMap();
         final ArrayList<Student> studList = studentDatabaseHandler.getAllStudents();
 
@@ -158,6 +158,16 @@ public class AddSkillChart extends Activity {
 //
 //            }
 //        });
+
+        bAdd.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                ArrayList<Student> slist = studentDatabaseHandler.getAllStudents();
+                selectedList.addAll(slist);
+                namesadapter.clear();
+                selectednamesadapter.notifyDataSetChanged();
+            }
+        });
 
         bCreateSc.setOnClickListener(new View.OnClickListener() {
             @Override

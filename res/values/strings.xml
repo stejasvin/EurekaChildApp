@@ -31,4 +31,6 @@
         <item>asd</item>
     </string-array>
 
+    <string name="title_activity_export_import">ExportImport</string>
+
 </resources>

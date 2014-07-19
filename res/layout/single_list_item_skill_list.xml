@@ -7,16 +7,15 @@
  
      <TextView android:id="@+id/single_list_item_skill_name"
          android:textSize="20dp"
-         android:textStyle="bold"
          android:layout_gravity="left"
-         android:layout_width="fill_parent"
+         android:layout_width="wrap_content"
+         android:layout_weight="1"
          android:layout_height="wrap_content"/>
 
     <TextView android:id="@+id/single_list_item_skill_subject"
         android:textSize="20dp"
-        android:textStyle="bold"
         android:layout_gravity="right"
-        android:layout_width="fill_parent"
+        android:layout_width="wrap_content"
         android:layout_height="wrap_content"/>
 
 </LinearLayout>

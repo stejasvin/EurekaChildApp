@@ -30,6 +30,18 @@
             android:orientation="vertical">
 
             <Button
+                android:id="@+id/ex_import"
+                android:layout_width="fill_parent"
+                android:layout_height="100dp"
+                android:layout_columnSpan="2"
+                android:text="Export/Import data" />
+
+            <ImageView
+                android:layout_width="fill_parent"
+                android:layout_height="5dp"
+                android:background="#000000" />
+
+            <Button
                 android:id="@+id/add_student"
                 android:layout_width="fill_parent"
                 android:layout_height="100dp"

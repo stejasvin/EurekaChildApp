@@ -46,7 +46,9 @@ public class AddSkill extends ActionBarActivity {
                 skillDatabaseHandler.addSkill(skill);
 
                 //updating list
-                skillList = skillDatabaseHandler.getAllSkill();
+                skillList.add(skill);
+                etName.setText("");
+                etSubject.setText("");
                 skillListAdapter.notifyDataSetChanged();
             }
         });

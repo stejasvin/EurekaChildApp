@@ -70,6 +70,10 @@ public class ViewStudentDetail extends ActionBarActivity {
             }
         }catch (JSONException e){
             e.printStackTrace();
+        }catch (NullPointerException e){
+            e.printStackTrace();
+        }catch (Exception e){
+            e.printStackTrace();
         }
 
 

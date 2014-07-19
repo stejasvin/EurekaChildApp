@@ -92,6 +92,7 @@ public class StudentDatabaseHandler extends SQLiteOpenHelper {
 				new String[] { String.valueOf(l_id) }, null, null, null, null);
 
 		if (cursor != null) {
+            Log.i("TestCursor",l_id+"");
             cursor.moveToFirst();
             Student student = new Student();
             student.setLid(cursor.getInt(0));
@@ -192,12 +193,12 @@ public class StudentDatabaseHandler extends SQLiteOpenHelper {
 	}
 //
 //	// Deleting single annotation
-//	public void deleteAnnotation(Annotation annotation) {
-//		SQLiteDatabase db = this.getWritableDatabase();
-//		db.delete(TABLE_ANNOTATIONS, KEY_ID + " = ?",
-//				new String[] { String.valueOf(annotation.getID()) });
-//		db.close();
-//	}
+	public void deleteStudent(Student student) {
+		SQLiteDatabase db = this.getWritableDatabase();
+		db.delete(TABLE_STUDENT, KEY_LOCAL_ID + " = ?",
+				new String[] { student.getLid()+"" });
+		db.close();
+	}
 
 
 //	// Getting annotations Count

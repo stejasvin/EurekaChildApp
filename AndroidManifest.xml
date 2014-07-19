@@ -29,6 +29,13 @@
             android:name=".Activities.ViewStudentDetail"
             android:label="@string/title_activity_view_student_detail" >
         </activity>
+        <activity
+            android:name=".Activities.ExportImport"
+            android:label="@string/title_activity_export_import" >
+        </activity>
+        <activity android:name=".Activities.ActivityImport"/>
     </application>
+
+    <uses-permission android:name="android.permission.WRITE_EXTERNAL_STORAGE" />
 
 </manifest>
