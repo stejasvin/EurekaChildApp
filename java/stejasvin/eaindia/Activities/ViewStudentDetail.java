@@ -1,7 +1,7 @@
 package stejasvin.eaindia.Activities;
 
+import android.app.Activity;
 import android.os.Bundle;
-import android.support.v7.app.ActionBarActivity;
 import android.view.Gravity;
 import android.view.Menu;
 import android.view.MenuItem;
@@ -19,7 +19,7 @@ import stejasvin.eaindia.R;
 import stejasvin.eaindia.databases.SkillDatabaseHandler;
 import stejasvin.eaindia.databases.StudentDatabaseHandler;
 
-public class ViewStudentDetail extends ActionBarActivity {
+public class ViewStudentDetail extends Activity {
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -29,10 +29,10 @@ public class ViewStudentDetail extends ActionBarActivity {
         StudentDatabaseHandler studentDatabaseHandler = new StudentDatabaseHandler(this);
         SkillDatabaseHandler skillDatabaseHandler = new SkillDatabaseHandler(this);
         Student student = studentDatabaseHandler.getStudent(getIntent().getIntExtra("stejasvin.eaindia.LID",0));
-        ((TextView)findViewById(R.id.add_st_name)).setText(student.getName());
-        ((TextView)findViewById(R.id.add_st_roll)).setText(student.getRoll());
-        ((TextView)findViewById(R.id.add_st_std)).setText(student.getStd());
-        ((TextView)findViewById(R.id.add_st_gender)).setText(student.getGender());
+        ((TextView)findViewById(R.id.add_st_name)).setText("Name - "+student.getName());
+        ((TextView)findViewById(R.id.add_st_roll)).setText("Roll - "+student.getRoll());
+        ((TextView)findViewById(R.id.add_st_std)).setText("Class - "+student.getStd());
+        ((TextView)findViewById(R.id.add_st_gender)).setText("Gender - "+student.getGender());
         TableLayout tl = (TableLayout)findViewById(R.id.add_st_table);
         TableRow.LayoutParams nameLp = new TableRow.LayoutParams();
         nameLp.gravity = Gravity.LEFT;
@@ -47,12 +47,19 @@ public class ViewStudentDetail extends ActionBarActivity {
                     try {
                         ids[i] = skillIds.getJSONObject(i).getInt(SkillDatabaseHandler.KEY_LOCAL_ID);
                         Skill skill = skillDatabaseHandler.getSkill(ids[i]);
+
+                        String date = skillIds.getJSONObject(i).getString(SkillDatabaseHandler.KEY_CREATION_DATE);
+                        if(date==null || date.equals(""))
+                            continue;
+
                         TextView tvName = new TextView(this);
                         tvName.setText(skill.getName());
                         tvName.setLayoutParams(nameLp);
                         TextView tvDate = new TextView(this);
-                        tvDate.setText(skill.getDateOfCreation()+" - ");
+                        tvDate.setText(date+"  -  ");
                         tvDate.setLayoutParams(dateLp);
+
+
 
                         TableRow tr = new TableRow(this);
                         tr.setOrientation(LinearLayout.HORIZONTAL);

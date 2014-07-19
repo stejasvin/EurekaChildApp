@@ -57,11 +57,12 @@ public class StudentGridListAdapter extends ArrayAdapter {
         tvCourse.setText(studentList.get(position));
         tvCourse.setHeight(100);
 
+
         return row;
     }
 
     @Override
     public int getCount() {
-        return studentList.size()+1;
+        return studentList.size();
     }
 }

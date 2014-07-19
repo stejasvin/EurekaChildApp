@@ -13,12 +13,14 @@
         android:id="@+id/tv_vs_centre_name"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
+        android:textSize="20dp"
         android:text="Center - " />
 
     <TextView
         android:id="@+id/tv_vs_tutor"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
+        android:textSize="20dp"
         android:text="Tutor - " />
 
     <Button
@@ -30,7 +32,7 @@
     <ScrollView
         android:layout_width="match_parent"
         android:layout_height="fill_parent"
-        android:background="#aabbcc">
+        >
 
         <FrameLayout
             android:layout_width="fill_parent"
@@ -48,11 +50,12 @@
                     android:layout_height="fill_parent"
                     android:layout_weight="2"
 
+
                     />
 
                 <LinearLayout
                     android:id="@+id/linearLayout_grid"
-                    android:layout_width="700dp"
+                    android:layout_width="0dp"
                     android:layout_height="800dp"
                     android:layout_weight="4"
                     android:orientation="vertical">
@@ -61,6 +64,7 @@
                         android:id="@+id/tv_vs_gridview"
                         android:layout_width="fill_parent"
                         android:layout_height="fill_parent"
+                        android:layout_marginRight="100dp"
                         app:columnWidth="500dp"
                         app:horizontalSpacing="10dp"
                         app:rowHeight="100dp"
@@ -68,6 +72,7 @@
                         app:scrollDirectionLandscape="horizontal"
                         app:scrollDirectionPortrait="horizontal"
                         app:stretchMode="columnWidth"
+
                         />
 
                 </LinearLayout>

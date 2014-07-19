@@ -98,8 +98,8 @@ public class ViewSkillChart extends ActionBarActivity {
 
         SkillChart skillChart = skillChartDatabaseHandler.getSkillChart(scLid);
 
-        ((TextView) findViewById(R.id.tv_vs_centre_name)).setText(skillChart.getCentreName());
-        ((TextView) findViewById(R.id.tv_vs_tutor)).setText(skillChart.getTutorName());
+        ((TextView) findViewById(R.id.tv_vs_centre_name)).setText("Centre - "+skillChart.getCentreName());
+        ((TextView) findViewById(R.id.tv_vs_tutor)).setText("Tutor - "+skillChart.getTutorName());
         ((Button) findViewById(R.id.b_vs_export)).setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {

@@ -57,7 +57,8 @@ public class StudentListAdapter extends ArrayAdapter {
             tvCourse.setPadding(5,10,5,10);
 
         }else {
-
+            tvCourse.setTextSize(20);
+            tvCourse.setPadding(5,10,5,10);
             tvCourse.setText(studentList.get(position-1).getName());
         }
         return row;
